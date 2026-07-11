@@ -15,10 +15,10 @@ const Themes: Array<{ theme: Theme; icon: React.ComponentType }> = [
         theme: "dark",
         icon: Moon,
     },
-    {
-        theme: "system",
-        icon: Computer,
-    },
+    // {
+    //     theme: "system",
+    //     icon: Computer,
+    // },
 
 ]
 
@@ -36,14 +36,14 @@ export function ModeToggle() {
     };
 
     return (
-        <div className={"fixed top-1/2 right-6 -translate-y-1/2 z-10 flex flex-col gap-0 rounded-full border border-primary dark:bg-primary shadow-xl p-0.5 backdrop-blur"}>
+        <div className={"fixed top-1/2 right-6 -translate-y-1/2 z-10 flex flex-col gap-0 rounded-full border border-primary bg-primary dark:bg-background shadow-xl p-0.5 backdrop-blur"}>
             {
                 Themes.map(({ theme: theme, icon: Icon }) => {
                     return (
                         <div
                             key={theme}
                             onClick={() => handleThemeSwitch(theme)}
-                            className="rounded-full w-6 h-6 flex items-center justify-center text-primary dark:text-white [&>svg]:w-4 [&>svg]:h-4"
+                            className="rounded-full w-6 h-6 flex items-center justify-center text-background dark:text-white [&>svg]:w-4 [&>svg]:h-4"
                             role="button"
                         >
                             <Icon />
@@ -51,7 +51,7 @@ export function ModeToggle() {
                 })
             }
             <m.span
-                className="absolute left-0.5 top-0.5 z-20 h-6 w-6 rounded-full bg-primary dark:bg-white"
+                className="absolute left-0.5 top-0.5 z-20 h-6 w-6 rounded-full bg-white dark:bg-primary"
                 animate={{ y: positions[_theme as Theme] }}
                 transition={{
                     type: "spring",

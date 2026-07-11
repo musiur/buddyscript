@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { RootLayout as _RootLayout } from "@/components/layouts/root";
-import { inter } from "@/lib/fonts";
+import { poppins } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +18,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
-      <body className={`${inter.className} h-full antialiased`}>
+      <body className={`${poppins.className} h-full antialiased`}>
         <_RootLayout>
           {children}
         </_RootLayout>
