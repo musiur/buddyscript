@@ -15,10 +15,10 @@ const Themes: Array<{ theme: Theme; icon: React.ComponentType }> = [
         theme: "dark",
         icon: Moon,
     },
-    // {
-    //     theme: "system",
-    //     icon: Computer,
-    // },
+    {
+        theme: "system",
+        icon: Computer,
+    },
 
 ]
 
