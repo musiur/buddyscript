@@ -20,8 +20,10 @@ const FormSchema = z.object({
   }),
 });
 
+type TFormSchema = z.infer<typeof FormSchema>;
+
 const LoginForm = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<TFormSchema>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
@@ -29,7 +31,7 @@ const LoginForm = () => {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: TFormSchema) {
     console.log(data);
   }
 

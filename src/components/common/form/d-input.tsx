@@ -5,7 +5,7 @@
  *
  * @description Unified & reusable INPUT component
  *
- * @params form, name, type, label, placeholder
+ * @params form, name, type, label, placeholder etc
  * form: react-hook-form
  * name: input name
  * type: input types
