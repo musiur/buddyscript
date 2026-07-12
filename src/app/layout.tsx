@@ -18,7 +18,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
-      <body className={`${poppins.className} h-full antialiased`}>
+      <body className={`${poppins.className} h-full antialiased min-h-screen bg-[#F0F2F5] dark:bg-[#232E42]`}>
         <_RootLayout>
           {children}
         </_RootLayout>
