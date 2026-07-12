@@ -1,4 +1,3 @@
-import { InputForm } from "@/components/common/form";
 import { HomeIcon } from "lucide-react";
 
 const Home = () => {
@@ -8,7 +7,6 @@ const Home = () => {
         <h1 className="text-2xl font-bold flex items-center gap-2"><HomeIcon /> Home Page</h1>
         <p>Fox without a tail. Brown fish should fly from water sky.</p>
       </div>
-      <InputForm />
     </div>
   )
 }

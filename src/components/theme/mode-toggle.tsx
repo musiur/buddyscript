@@ -36,7 +36,7 @@ export function ModeToggle() {
     };
 
     return (
-        <div className={"fixed top-1/2 right-6 -translate-y-1/2 z-10 flex flex-col gap-0 rounded-full border border-primary bg-primary dark:bg-background shadow-xl p-0.5 backdrop-blur"}>
+        <div className={"fixed top-1/2 right-2 sm:right-6 -translate-y-1/2 z-10 flex flex-col gap-0 rounded-full border border-primary bg-primary dark:bg-background shadow-xl p-0.5 backdrop-blur"}>
             {
                 Themes.map(({ theme: theme, icon: Icon }) => {
                     return (

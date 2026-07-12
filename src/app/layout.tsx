@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { RootLayout as _RootLayout } from "@/components/layouts/root";
 import { poppins } from "@/lib/fonts";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +20,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
+      suppressHydrationWarning className={cn("font-sans", geist.variable)}
     >
       <body className={`${poppins.className} h-full antialiased min-h-screen bg-[#F0F2F5] dark:bg-[#232E42]`}>
         <_RootLayout>

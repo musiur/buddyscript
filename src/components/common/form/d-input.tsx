@@ -122,7 +122,7 @@ const DInput = ({
           type="button"
           variant="ghost"
           size="icon"
-          className="absolute right-1 top-1 h-7 w-7"
+          className="absolute right-2 top-2.5 h-7 w-7"
           onClick={() => setCompost(prev => ({ ...prev, showPass: !prev.showPass }))}
         >
           {compost.showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -197,7 +197,6 @@ const DInput = ({
                 }
               }}
               disabled={(date: Date) => date < new Date() && date > new Date("1900-01-01")}
-              initialFocus
             />
           </PopoverContent>
         )}
@@ -236,7 +235,6 @@ const DInput = ({
                   field.onChange(next)
                 }
               }}
-              initialFocus
             />
             <div className="border-t p-3">
               <input

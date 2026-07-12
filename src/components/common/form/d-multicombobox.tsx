@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
-import DynamicAvatar from "@/components/dynamic/d-avatar"
+import DynamicAvatar from "@/components/common/d-avatar"
 
 interface MultiComboboxOption {
   label: string
