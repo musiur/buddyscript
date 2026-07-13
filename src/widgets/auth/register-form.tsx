@@ -10,6 +10,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 const FormSchema = z.object({
+  firstName: z.string().min(2, {
+    message: "First name must be at least 2 characters.",
+  }),
+  lastName: z.string().min(2, {
+    message: "Last name must be at least 2 characters.",
+  }),
   email: z.string().min(2, {
     message: "Email must be at least 2 characters.",
   }),
@@ -25,6 +31,8 @@ const RegisterForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -38,6 +46,8 @@ const RegisterForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <DynamicInput name="firstName" label="First Name" />
+        <DynamicInput name="lastName" label="Last Name" />
         <DynamicInput name="email" label="Email" />
 
         <DynamicInput name="password" label="Password" type="password" />

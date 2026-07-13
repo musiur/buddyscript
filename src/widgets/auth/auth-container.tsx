@@ -25,6 +25,7 @@ const AuthContainer = ({
         alt="login"
         width={400}
         height={400}
+        loading="eager"
         className="w-8 lg:w-40 absolute top-0 left-0"
       />
       <Image
@@ -32,6 +33,7 @@ const AuthContainer = ({
         alt="login"
         width={400}
         height={400}
+        loading="eager"
         className="w-120 absolute top-0  hidden md:block md:right-0 xl:right-10 -translate-y-1/3"
       />
       <Image
@@ -39,6 +41,7 @@ const AuthContainer = ({
         alt="login"
         width={400}
         height={400}
+        loading="eager"
         className="w-100 absolute bottom-0 hidden md:block md:right-0 xl:right-120"
       />
       <div
@@ -54,6 +57,7 @@ const AuthContainer = ({
           alt={type === "login" ? "login" : "register"}
           width={400}
           height={400}
+          loading="eager"
           className="object-cover w-11/12 sm:w-full h-full z-10"
         />
       </div>
@@ -64,6 +68,7 @@ const AuthContainer = ({
             alt="login"
             width={400}
             height={400}
+            loading="eager"
             className="w-36 mx-auto"
           />
         </Link>
