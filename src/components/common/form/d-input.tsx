@@ -60,6 +60,7 @@ const DInput = ({
   tooltip = "",
   description,
   defaultValue = "",
+  hideLevel = false
 }: {
   name: string
   type?: TypeDInputTypes
@@ -74,6 +75,7 @@ const DInput = ({
   tooltip?: string
   description?: string
   defaultValue?: string
+  hideLevel?: boolean
 }) => {
   const form = useFormContext()
   // State to manage showing password fields input as text or, password
@@ -153,13 +155,13 @@ const DInput = ({
           <ScrollArea className="max-h-[160px] h-auto">
             {options?.length
               ? options?.map((option: TypeSelectOption, index: number) => {
-                  const { value, label } = option
-                  return (
-                    <SelectItem key={value || `option-${index}`} value={value}>
-                      {label}
-                    </SelectItem>
-                  )
-                })
+                const { value, label } = option
+                return (
+                  <SelectItem key={value || `option-${index}`} value={value}>
+                    {label}
+                  </SelectItem>
+                )
+              })
               : null}
           </ScrollArea>
         </SelectContent>
@@ -258,15 +260,18 @@ const DInput = ({
       </Popover>
     ),
   }
+
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
         <FormItem className={cn(className, "space-y-2")}>
-          <FormLabel className="flex items-center justify-between gap-4">
-            {label} {tooltip && <DynamicTooltip content={tooltip} />}
-          </FormLabel>
+          {
+            !hideLevel ? <FormLabel className="flex items-center justify-between gap-4">
+              {label} {tooltip && <DynamicTooltip content={tooltip} />}
+            </FormLabel> : null
+          }
           <FormControl>{inputFields[type](field)}</FormControl>
           {description ? <FormDescription>{description}</FormDescription> : null}
           <FormMessage />
