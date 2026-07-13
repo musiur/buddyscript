@@ -1,108 +1,45 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import Link from "next/link";
+import DynamicInput from "@/components/common/form/d-input";
+import DynamicSubmit from "@/components/common/form/d-submit";
+import Flex from "@/components/layouts/flex-layout";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import DynamicSubmit from "@/components/common/form/d-submit"
-import Flex from "@/components/layouts/flex-layout"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
-import Link from "next/link"
+const FormSchema = z.object({
+  email: z.string().min(2, {
+    message: "Email must be at least 2 characters.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+});
 
-const formSchema = z.object({
-  email: z
-    .string()
-    .email("Please enter a valid email address."),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters.")
-    .max(100, "Password must be at most 100 characters."),
-})
-
-export function LoginForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+const LoginForm = () => {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
-  })
+  });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    toast("You submitted the following values:", {
-      description: (
-        <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: "bottom-right",
-      classNames: {
-        content: "flex flex-col gap-2",
-      },
-      style: {
-        "--border-radius": "calc(var(--radius)  + 4px)",
-      } as React.CSSProperties,
-    })
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
   }
 
   return (
-    <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="text-left">
-      <FieldGroup>
-        <Controller
-          name="email"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-rhf-demo-email">
-                Email
-              </FieldLabel>
-              <Input
-                {...field}
-                id="form-rhf-demo-email"
-                aria-invalid={fieldState.invalid}
-                placeholder="Enter your email"
-                autoComplete="off"
-              />
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
-              )}
-            </Field>
-          )}
-        />
-
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <DynamicInput name="email" label="Email" />
 
         <div className="space-y-2 pb-4">
-          <Controller
-            name="password"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-password">
-                  Password
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-demo-password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Enter your password"
-                  autoComplete="off"
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
+          <DynamicInput name="password" label="Password" type="password" />
           <Flex className="justify-between">
             <RadioGroup defaultValue="option-one">
               <div className="flex items-center gap-3 text-left">
@@ -118,11 +55,10 @@ export function LoginForm() {
             </Link>
           </Flex>
         </div>
-      </FieldGroup>
-      <DynamicSubmit pending={form.formState.isSubmitting} text="Login" />
-    </form>
-  )
-}
-
+        <DynamicSubmit pending={form.formState.isSubmitting} text="Login" />
+      </form>
+    </Form>
+  );
+};
 
 export default LoginForm;
