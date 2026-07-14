@@ -5,7 +5,9 @@ import { DynamicForm } from "@/components/common/form";
 import DynamicSubmit from "@/components/common/form/d-submit";
 import Flex from "@/components/layouts/flex-layout"
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Form } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Calendar, Image, Notebook, Rocket, Send, Video } from "lucide-react";
 import { useForm } from "react-hook-form"
@@ -32,16 +34,14 @@ export const PostForm = () => {
     }
     return (
         <div className="bg-background p-5 rounded-lg">
-
-
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleSubmit)}>
-                    <Flex>
-                        <DynamicAvatar src="/" name="US" className="w-10 h-10" />
-                        <DynamicForm.Input name="input" placeholder="What's on your mind?" className="w-full ring-0 focus:outline-0 focus:ring-0 border-none" type="textarea" hideLevel={true}/>
-                    </Flex>
-                    <Flex className="justify-between items-center mt-2 bg-muted rounded-md">
-                        <Flex className="px-2 items-center gap-0!">
+                    <div className="relative">
+                        <DynamicAvatar src="/" name="US" className="w-10 h-10 absolute top-0 left-0" />
+                        <Textarea placeholder="Write what's on your mind" className="pl-14 min-h-24 max-h-60 border-none bg-background dark:bg-background"/>
+                    </div>
+                    <Flex className="justify-between items-center mt-2 bg-input/30 rounded-md">
+                        <ButtonGroup className="hidden sm:inline-flex">
                             <Button variant="ghost">
                                 <Image />
                                 Image
@@ -58,7 +58,21 @@ export const PostForm = () => {
                                 <Notebook />
                                 Article
                             </Button>
-                        </Flex>
+                        </ButtonGroup>
+                        <ButtonGroup className="inline-flex sm:hidden">
+                            <Button variant="ghost" size="icon">
+                                <Image />
+                            </Button>
+                            <Button variant="ghost" size="icon">
+                                <Video />
+                            </Button>
+                            <Button variant="ghost" size="icon">
+                                <Calendar />
+                            </Button>
+                            <Button variant="ghost" size="icon">
+                                <Notebook />
+                            </Button>
+                        </ButtonGroup>
                         <DynamicSubmit pending={form.formState.isSubmitting} text="Post" icon={<Send />} className="max-w-24"/>
                     </Flex>
                 </form>

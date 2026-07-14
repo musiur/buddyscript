@@ -6,11 +6,13 @@ import Image from "next/image"
 
 export const Stories = () => {
     return (
-        <div className="max-w-[640px] overflow-hidden relative">
-            <Button variant="default" size="icon" className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full mx-auto border-2 border-background z-10">
-                <ChevronRight />
-            </Button>
-            <Flex className="gap-6!">
+        <div className="relative overflow-hidden">
+            <div className="w-full sticky top-1/2 right-2 -translate-y-1/2">
+                <Button variant="default" size="icon" className="rounded-full mx-auto border-2 border-background z-10">
+                    <ChevronRight />
+                </Button>
+            </div>
+            <Flex className="gap-3! sm:gap-6!">
                 <div className="min-w-32 w-32 h-36 rounded-lg relative overflow-hidden">
                     <Image src="/images/card_ppl1.png" alt="" fill className="object-cover object-center h-full" />
                     <div className="absolute inset-0 bg-black/50 flex flex-col justify-end">
@@ -23,7 +25,7 @@ export const Stories = () => {
                     </div>
                 </div>
                 {
-                    [1, 2, 3, 4, 5, 6].map((item) => {
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
                         return (
                             <div key={item} className="min-w-32 w-32 h-36 rounded-lg relative overflow-hidden">
                                 <Image src="/images/card_ppl1.png" alt="" fill className="object-cover object-center h-full" />

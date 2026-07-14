@@ -37,7 +37,7 @@ const Navbar = () => {
                     </Flex>
                 </Container>
             </nav>
-            <Flex className="fixed bottom-0 left-0 w-full flex lg:hidden items-center justify-between sm:px-10">
+            <Flex className="fixed bottom-0 left-0 w-full flex lg:hidden items-center justify-between sm:px-10 bg-background z-999">
                 {
                     Links.map((link) => (
                         <NavItem key={uuid()} link={link} />
@@ -111,28 +111,28 @@ const AvatarPopover = ({ bottomMenu = false }: { bottomMenu?: boolean }) => {
 }
 
 const Links = [
-        {
-            label: "Home",
-            href: "/",
-            icon: <Home />,
-            notificationCount: 0,
-        },
-        {
-            label: "Group",
-            href: "/group",
-            icon: <Users />,
-            notificationCount: 0,
-        },
-        {
-            label: "Notifications",
-            href: "/notifications",
-            icon: <Bell />,
-            notificationCount: 6,
-        },
-        {
-            label: "Messages",
-            href: "/messages",
-            icon: <MessageCircle />,
-            notificationCount: 2,
-        },
-    ]
+    {
+        label: "Home",
+        href: "/",
+        icon: <Home />,
+        notificationCount: 0,
+    },
+    {
+        label: "Group",
+        href: "/group",
+        icon: <Users />,
+        notificationCount: 0,
+    },
+    {
+        label: "Notifications",
+        href: "/notifications",
+        icon: <Bell />,
+        notificationCount: 6,
+    },
+    {
+        label: "Messages",
+        href: "/messages",
+        icon: <MessageCircle />,
+        notificationCount: 2,
+    },
+]

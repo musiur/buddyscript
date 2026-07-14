@@ -5,7 +5,7 @@ const Home = () => {
 
   return (
     <Container className="flex items-start justify-between gap-6 py-6">
-      <div className={SideBlocksPanelStyle}>
+      <div className="min-w-[280px] xl:min-w-[300px] w-[300px] space-y-6 hidden lg:block">
         <Feed.Explore />
         <Feed.SuggestedPeople />
         <Feed.Events />
@@ -15,7 +15,7 @@ const Home = () => {
         <Feed.PostForm />
         <Feed.PostList />
       </div>
-      <div className={SideBlocksPanelStyle}>
+      <div className="min-w-[280px] xl:min-w-[300px] w-[300px] space-y-6 hidden xl:block">
         <Feed.YouMightLike />
         <Feed.YourFriends />
       </div>
@@ -24,6 +24,4 @@ const Home = () => {
 }
 
 export default Home;
-
-const SideBlocksPanelStyle = "min-w-[300px] w-[300px] space-y-6 hidden lg:block"; 
 
