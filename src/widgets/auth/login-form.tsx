@@ -10,26 +10,18 @@ import DynamicSubmit from "@/components/common/form/d-submit";
 import Flex from "@/components/layouts/flex-layout";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-const FormSchema = z.object({
-  email: z.string().min(2, {
-    message: "Email must be at least 2 characters.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-});
+import { LoginFormSchema, TLoginFormSchema } from "@/features/auth/schemas/login.schema";
 
 const LoginForm = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<TLoginFormSchema>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: TLoginFormSchema) {
     console.log(data);
   }
 

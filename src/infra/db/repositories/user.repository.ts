@@ -1,6 +1,7 @@
 import { CreateUserInput } from "@/entities/user/dto";
 import { User } from "@/entities/user/model";
 import { db } from "@/infra/db";
+import { v4 as uuid } from "uuid";
 
 const findByEmail = async (email: string) => {
 
@@ -36,12 +37,14 @@ const findById = async (id: string) => {
 const create = async (input: CreateUserInput) => {
     const rows = await db<User[]>`
     INSERT INTO users (
-      first_name,
-      last_name,
+      id,
+      firstName,
+      lastName,
       email,
-      password_hash
+      passwordHash
     )
     VALUES (
+      ${uuid()},
       ${input.firstName},
       ${input.lastName},
       ${input.email},
@@ -57,9 +60,9 @@ const update = async (user: User) => {
     const rows = await db<User[]>`
     UPDATE users
     SET
-      first_name = ${user.firstName},
-      last_name = ${user.lastName},
-      updated_at = NOW()
+      firstName = ${user.firstName},
+      lastName = ${user.lastName},
+      updateAt = NOW()
     WHERE id = ${user.id}
     RETURNING *
   `;

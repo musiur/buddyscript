@@ -2,34 +2,17 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import DynamicInput from "@/components/common/form/d-input";
 import DynamicSubmit from "@/components/common/form/d-submit";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-
-const FormSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First name must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Last name must be at least 2 characters.",
-  }),
-  email: z.string().min(2, {
-    message: "Email must be at least 2 characters.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  confirmPassword: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-});
+import { RegisterFormSchema, TRegisterFormSchema } from "@/features/auth/schemas/register.schema";
+import { registerAction } from "@/features/auth/actions/register";
 
 const RegisterForm = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<TRegisterFormSchema>({
+    resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -39,8 +22,9 @@ const RegisterForm = () => {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+  async function onSubmit(data: TRegisterFormSchema) {
+    const result = await registerAction(data);
+    console.log(result);
   }
 
   return (
