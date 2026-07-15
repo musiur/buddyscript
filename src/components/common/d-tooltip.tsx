@@ -14,7 +14,7 @@ const DynamicTooltip = ({
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>{trigger || <Info className="w-4 h-4" />}</TooltipTrigger>
+        <TooltipTrigger asChild>{trigger || <Info className="h-4 w-4" />}</TooltipTrigger>
 
         <TooltipContent side={side}>{content}</TooltipContent>
       </Tooltip>

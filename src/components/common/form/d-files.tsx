@@ -48,14 +48,14 @@ const DFiles = ({
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const newFiles = acceptedFiles.map(file => ({
+      const newFiles = acceptedFiles.map((file) => ({
         file,
-        preview: ["image/", "video/"].some(type => file.type.startsWith(type))
+        preview: ["image/", "video/"].some((type) => file.type.startsWith(type))
           ? URL.createObjectURL(file)
           : "",
       }))
 
-      setFiles(prev => [...prev, ...newFiles])
+      setFiles((prev) => [...prev, ...newFiles])
       const currentValues = form.getValues(name) || []
       form.setValue(name, [...currentValues, ...acceptedFiles])
     },
@@ -69,7 +69,7 @@ const DFiles = ({
   })
 
   const removeFile = (index: number) => {
-    setFiles(prev => prev.filter((_, i) => i !== index))
+    setFiles((prev) => prev.filter((_, i) => i !== index))
     const currentValues = form.getValues(name) || []
     form.setValue(
       name,
@@ -85,18 +85,18 @@ const DFiles = ({
         <Image
           src={file.preview}
           alt={file.file.name}
-          className="w-full h-24 object-cover rounded-t-md"
+          className="h-24 w-full rounded-t-md object-cover"
           width={100}
           height={100}
         />
       )
     } else if (file.file.type.startsWith("video/")) {
       preview = (
-        <video src={file.preview} className="w-full h-24 object-cover rounded-t-md" controls />
+        <video src={file.preview} className="h-24 w-full rounded-t-md object-cover" controls />
       )
     } else {
       preview = (
-        <div className="w-full h-24 bg-gray-100 dark:bg-gray-800 rounded-t-md flex items-center justify-center">
+        <div className="flex h-24 w-full items-center justify-center rounded-t-md bg-gray-100 dark:bg-gray-800">
           <div className="text-4xl">{file.file.type.includes("pdf") ? "📄" : "📎"}</div>
         </div>
       )
@@ -106,8 +106,8 @@ const DFiles = ({
     return (
       <div className="overflow-hidden rounded-xl border dark:border-gray-800">
         {preview}
-        <div className="bg-white dark:bg-gray-900 p-2">
-          <p className="font-medium text-sm truncate">{file.file.name}</p>
+        <div className="bg-white p-2 dark:bg-gray-900">
+          <p className="truncate text-sm font-medium">{file.file.name}</p>
           <p className="text-xs text-gray-500">{(file.file.size / 1024 / 1024).toFixed(2)} MB</p>
         </div>
       </div>
@@ -126,13 +126,13 @@ const DFiles = ({
               <div
                 {...getRootProps()}
                 className={cn(
-                  "border-2 border-dashed rounded-lg p-4 hover:border-primary cursor-pointer",
+                  "hover:border-primary cursor-pointer rounded-lg border-2 border-dashed p-4",
                   isDragActive && "border-primary bg-primary/10"
                 )}
               >
                 <input {...getInputProps()} />
                 <div className="flex flex-col items-center gap-2 text-center">
-                  <Upload className="w-8 h-8 text-gray-400" />
+                  <Upload className="h-8 w-8 text-gray-400" />
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     Drag & drop files here, or click to select files
                   </p>
@@ -144,17 +144,17 @@ const DFiles = ({
 
               {files?.length > 0 && (
                 <ScrollArea className="h-[300px] w-full rounded-xl border p-4">
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                     {files.map((file, index) => (
-                      <div key={index} className="relative group">
+                      <div key={index} className="group relative">
                         {renderPreview(file)}
                         <Button
                           variant="destructive"
                           size="icon"
-                          className="absolute top-1 right-1 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity z-[1]"
+                          className="absolute top-1 right-1 z-[1] h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
                           onClick={() => removeFile(index)}
                         >
-                          <X className="w-4 h-4" />
+                          <X className="h-4 w-4" />
                         </Button>
                       </div>
                     ))}
@@ -165,7 +165,7 @@ const DFiles = ({
           </FormControl>
           {description ? (
             <FormDescription className="flex flex-wrap items-center gap-2">
-              <MessageCircleWarning className="w-4 h-4" />
+              <MessageCircleWarning className="h-4 w-4" />
               <span>{description}</span>
             </FormDescription>
           ) : null}

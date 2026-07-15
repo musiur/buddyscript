@@ -16,15 +16,14 @@ const DynamicAvatar = ({
   src = "",
   tooltip = false,
 }: DynamicAvatarProps): ReactNode => {
-
   const avatarBody = (
     <Avatar
       role="button"
-      className={cn("overflow-hidden rounded-full border border-border", className)}
+      className={cn("border-border overflow-hidden rounded-full border", className)}
     >
       <AvatarImage src={src || undefined} alt={name} className="object-cover object-center" />
       <AvatarFallback
-        className="rounded-full text-white text-xs"
+        className="rounded-full text-xs text-white"
         style={{
           background: getAvatarColor(name),
         }}

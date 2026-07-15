@@ -28,9 +28,7 @@ const DynamicAvatarGroup = ({
   const limited = (items || []).slice(0, max)
 
   if (!items?.length) {
-    return (
-      <DynamicAvatar name="?" src="" className={cn("size-full relative w-8 h-8")} />
-    )
+    return <DynamicAvatar name="?" src="" className={cn("relative size-full h-8 w-8")} />
   }
 
   return (
@@ -40,7 +38,7 @@ const DynamicAvatarGroup = ({
           key={`${item.name}-${idx}`}
           name={item.name}
           src={item.src}
-          className={cn("size-full relative w-8 h-8")}
+          className={cn("relative size-full h-8 w-8")}
           tooltip={true}
         />
       ))}

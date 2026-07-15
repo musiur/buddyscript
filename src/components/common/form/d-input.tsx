@@ -42,7 +42,8 @@ import DynamicTooltip from "../d-tooltip"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { formatDate } from "@/lib/date-formatter/date-formatter"
 
-export type TypeDInputTypes = "text" | "password" | "textarea" | "select" | "date" | "datetime" | "number"
+export type TypeDInputTypes =
+  "text" | "password" | "textarea" | "select" | "date" | "datetime" | "number"
 
 type TypeDInputField = ControllerRenderProps<FieldValues, string>
 
@@ -60,7 +61,7 @@ const DInput = ({
   tooltip = "",
   description,
   defaultValue = "",
-  hideLevel = false
+  hideLevel = false,
 }: {
   name: string
   type?: TypeDInputTypes
@@ -124,8 +125,8 @@ const DInput = ({
           type="button"
           variant="ghost"
           size="icon"
-          className="absolute right-2 top-2.5 h-7 w-7"
-          onClick={() => setCompost(prev => ({ ...prev, showPass: !prev.showPass }))}
+          className="absolute top-2.5 right-2 h-7 w-7"
+          onClick={() => setCompost((prev) => ({ ...prev, showPass: !prev.showPass }))}
         >
           {compost.showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </Button>
@@ -152,16 +153,16 @@ const DInput = ({
           </SelectTrigger>
         </FormControl>
         <SelectContent>
-          <ScrollArea className="max-h-[160px] h-auto">
+          <ScrollArea className="h-auto max-h-[160px]">
             {options?.length
               ? options?.map((option: TypeSelectOption, index: number) => {
-                const { value, label } = option
-                return (
-                  <SelectItem key={value || `option-${index}`} value={value}>
-                    {label}
-                  </SelectItem>
-                )
-              })
+                  const { value, label } = option
+                  return (
+                    <SelectItem key={value || `option-${index}`} value={value}>
+                      {label}
+                    </SelectItem>
+                  )
+                })
               : null}
           </ScrollArea>
         </SelectContent>
@@ -170,7 +171,7 @@ const DInput = ({
     date: (field: TypeDInputField) => (
       <Popover
         open={compost.dateOpen}
-        onOpenChange={open => setCompost(prev => ({ ...prev, dateOpen: open }))}
+        onOpenChange={(open) => setCompost((prev) => ({ ...prev, dateOpen: open }))}
       >
         <PopoverTrigger asChild>
           <FormControl>
@@ -180,7 +181,7 @@ const DInput = ({
                 "w-full pl-3 text-left font-normal",
                 !field.value && "text-muted-foreground"
               )}
-              onClick={() => setCompost(prev => ({ ...prev, dateOpen: true }))}
+              onClick={() => setCompost((prev) => ({ ...prev, dateOpen: true }))}
             >
               {field.value ? formatDate(field.value) : <span>Pick a date</span>}
               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -192,10 +193,10 @@ const DInput = ({
             <Calendar
               mode="single"
               selected={field.value}
-              onSelect={value => {
+              onSelect={(value) => {
                 if (value) {
                   field.onChange(new Date(value))
-                  setCompost(prev => ({ ...prev, dateOpen: false }))
+                  setCompost((prev) => ({ ...prev, dateOpen: false }))
                 }
               }}
               disabled={(date: Date) => date < new Date() && date > new Date("1900-01-01")}
@@ -207,7 +208,7 @@ const DInput = ({
     datetime: (field: TypeDInputField) => (
       <Popover
         open={compost.dateOpen}
-        onOpenChange={open => setCompost(prev => ({ ...prev, dateOpen: open }))}
+        onOpenChange={(open) => setCompost((prev) => ({ ...prev, dateOpen: open }))}
       >
         <PopoverTrigger asChild>
           <FormControl>
@@ -217,7 +218,7 @@ const DInput = ({
                 "w-full pl-3 text-left font-normal",
                 !field.value && "text-muted-foreground"
               )}
-              onClick={() => setCompost(prev => ({ ...prev, dateOpen: true }))}
+              onClick={() => setCompost((prev) => ({ ...prev, dateOpen: true }))}
             >
               {field.value ? formatDate(field.value, "withTime") : <span>Pick date & time</span>}
               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -229,7 +230,7 @@ const DInput = ({
             <Calendar
               mode="single"
               selected={field.value}
-              onSelect={value => {
+              onSelect={(value) => {
                 if (value) {
                   const existing = field.value instanceof Date ? field.value : new Date()
                   const next = new Date(value)
@@ -247,7 +248,7 @@ const DInput = ({
                     ? `${String(field.value.getHours()).padStart(2, "0")}:${String(field.value.getMinutes()).padStart(2, "0")}`
                     : ""
                 }
-                onChange={e => {
+                onChange={(e) => {
                   const [hours, minutes] = e.target.value.split(":").map(Number)
                   const next = field.value instanceof Date ? new Date(field.value) : new Date()
                   next.setHours(hours, minutes, 0, 0)
@@ -267,11 +268,11 @@ const DInput = ({
       name={name}
       render={({ field }) => (
         <FormItem className={cn(className, "space-y-2")}>
-          {
-            !hideLevel ? <FormLabel className="flex items-center justify-between gap-4">
+          {!hideLevel ? (
+            <FormLabel className="flex items-center justify-between gap-4">
               {label} {tooltip && <DynamicTooltip content={tooltip} />}
-            </FormLabel> : null
-          }
+            </FormLabel>
+          ) : null}
           <FormControl>{inputFields[type](field)}</FormControl>
           {description ? <FormDescription>{description}</FormDescription> : null}
           <FormMessage />

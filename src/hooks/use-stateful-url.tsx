@@ -25,7 +25,7 @@ const useStatefulUrl = () => {
   const addQueryParams = (queries: Array<{ key: string; value: string }>) => {
     const params = new URLSearchParams(searchParams.toString())
 
-    queries.forEach(query => {
+    queries.forEach((query) => {
       const { key, value } = query
 
       params.delete(key)

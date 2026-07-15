@@ -1,42 +1,56 @@
 import Flex from "@/components/layouts/flex-layout"
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { v4 as uuid } from "uuid";
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+import { v4 as uuid } from "uuid"
 
-import { Bookmark, ChartNoAxesCombined, Gamepad, Save, Settings, UserPlus, Users, Video } from "lucide-react";
+import {
+  Bookmark,
+  ChartNoAxesCombined,
+  Gamepad,
+  Save,
+  Settings,
+  UserPlus,
+  Users,
+  Video,
+} from "lucide-react"
 
-type TBadgeVariants = "default" | "link" | "secondary" | "destructive" | "outline" | "ghost" | null | undefined;
+type TBadgeVariants =
+  "default" | "link" | "secondary" | "destructive" | "outline" | "ghost" | null | undefined
 type TExploreLinks = Array<{
-  label: string,
-  icon: React.ReactNode,
-  href: string,
+  label: string
+  icon: React.ReactNode
+  href: string
   badge?: {
-    label: string,
+    label: string
     type: TBadgeVariants
   }
 }>
 
 export const Explore = () => {
-    return (
-        <Flex className="flex-col p-6 bg-background rounded-md gap-5!">
-          <h3 className="font-medium text-lg">Explore</h3>
-          {
-            ExploreLinks.map((item) => {
-              return (
-                <Link key={uuid()} href={item.href} className="flex items-center justify-between gap-4 text-muted-foreground group">
-                  <Flex className="[&>svg]:w-6 [&>svg]:w]h-6">
-                    {item.icon}
-                    <span className="group-hover:text-primary font-medium">{item.label}</span>
-                  </Flex>
-                  {
-                    item.badge ? <Badge variant={item.badge.type} className="bg-[#0ACF83] text-white">{item.badge.label}</Badge> : null
-                  }
-                </Link>
-              )
-            })
-          }
-        </Flex>
-    )
+  return (
+    <Flex className="bg-background flex-col gap-5! rounded-md p-6">
+      <h3 className="text-lg font-medium">Explore</h3>
+      {ExploreLinks.map((item) => {
+        return (
+          <Link
+            key={uuid()}
+            href={item.href}
+            className="text-muted-foreground group flex items-center justify-between gap-4"
+          >
+            <Flex className="[&>svg]:w]h-6 [&>svg]:w-6">
+              {item.icon}
+              <span className="group-hover:text-primary font-medium">{item.label}</span>
+            </Flex>
+            {item.badge ? (
+              <Badge variant={item.badge.type} className="bg-[#0ACF83] text-white">
+                {item.badge.label}
+              </Badge>
+            ) : null}
+          </Link>
+        )
+      })}
+    </Flex>
+  )
 }
 
 const ExploreLinks: TExploreLinks = [
@@ -46,8 +60,8 @@ const ExploreLinks: TExploreLinks = [
     href: "#",
     badge: {
       label: "New",
-      type: "default"
-    }
+      type: "default",
+    },
   },
   {
     label: "Insights",
@@ -57,7 +71,7 @@ const ExploreLinks: TExploreLinks = [
   {
     label: "Find friends",
     icon: <UserPlus />,
-    href: "#"
+    href: "#",
   },
   {
     label: "Bookmarks",
@@ -67,7 +81,7 @@ const ExploreLinks: TExploreLinks = [
   {
     label: "Group",
     icon: <Users />,
-    href: "#"
+    href: "#",
   },
   {
     label: "Gaming",
@@ -75,17 +89,17 @@ const ExploreLinks: TExploreLinks = [
     href: "#",
     badge: {
       label: "New",
-      type: "default"
-    }
+      type: "default",
+    },
   },
   {
     label: "Settings",
     icon: <Settings />,
-    href: "#"
+    href: "#",
   },
   {
     label: "Save post",
     icon: <Save />,
-    href: "#"
+    href: "#",
   },
 ]

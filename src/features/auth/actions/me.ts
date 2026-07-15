@@ -1,20 +1,20 @@
-"use server";
+"use server"
 
-import { User } from "@/entities/user/model";
-import { ActionResponse } from "@/lib/types/server-action-response.interface";
-import { authService } from "../server/auth.service";
+import { User } from "@/entities/user/model"
+import { ActionResponse } from "@/lib/types/server-action-response.interface"
+import { authService } from "../server/auth.service"
 
 export const meAction = async (): Promise<ActionResponse<User>> => {
-    const user = await authService.getCurrentUser();
+  const user = await authService.getCurrentUser()
 
-    if (!user) {
-        return {
-            success: false,
-        };
-    }
-
+  if (!user) {
     return {
-        success: true,
-        data: user,
-    };
-};
+      success: false,
+    }
+  }
+
+  return {
+    success: true,
+    data: user,
+  }
+}

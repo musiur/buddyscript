@@ -1,24 +1,24 @@
-import type { UserWithPassword } from "@/entities/user/model";
+import type { UserWithPassword } from "@/entities/user/model"
 
 export interface Session {
-  id: string;
+  id: string
 
-  tokenHash: string;
+  tokenHash: string
 
-  userId: string;
+  userId: string
 
-  expiresAt: Date;
+  expiresAt: Date
 
-  createdAt: Date;
+  createdAt: Date
 
-  lastSeenAt: Date;
+  lastSeenAt: Date
 
-  ipAddress: string | null;
+  ipAddress: string | null
 
-  userAgent: string | null;
+  userAgent: string | null
 }
 
 export interface AuthSession {
-  session: Session;
-  user: UserWithPassword;
+  session: Session
+  user: UserWithPassword
 }

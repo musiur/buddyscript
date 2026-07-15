@@ -10,7 +10,7 @@ export default function DCheckbox({ name, label }: { name: string; label: string
       <Checkbox
         id={name}
         checked={form.watch(name)}
-        onCheckedChange={checked => {
+        onCheckedChange={(checked) => {
           form.setValue(name, checked === true)
           if (!checked) {
             form.setValue(name, false)
@@ -19,7 +19,7 @@ export default function DCheckbox({ name, label }: { name: string; label: string
       />
       <label
         htmlFor={name}
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         {label}
       </label>

@@ -1,14 +1,15 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Form } from "@/components/ui/form";
-import DynamicInput from "@/components/common/form/d-input";
-import DynamicSubmit from "@/components/common/form/d-submit";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { RegisterFormSchema, TRegisterFormSchema } from "@/features/auth/schemas/register.schema";
-import { registerAction } from "@/features/auth/actions/register";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Form } from "@/components/ui/form"
+import DynamicInput from "@/components/common/form/d-input"
+import DynamicSubmit from "@/components/common/form/d-submit"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
+import { RegisterFormSchema, TRegisterFormSchema } from "@/features/auth/schemas/register.schema"
+import { registerAction } from "@/features/auth/actions/register"
+import { toast } from "sonner"
 
 const RegisterForm = () => {
   const form = useForm<TRegisterFormSchema>({
@@ -20,11 +21,20 @@ const RegisterForm = () => {
       password: "",
       confirmPassword: "",
     },
-  });
+  })
 
   async function onSubmit(data: TRegisterFormSchema) {
-    const result = await registerAction(data);
-    console.log(result);
+    const result = await registerAction(data)
+    console.log(result)
+    if (result?.success) {
+      toast.success("Account registration", {
+        description: result?.message || "User registered and logged in succesfully",
+      })
+    } else {
+      toast.error("Account registration", {
+        description: result?.message || "User registration failed!",
+      })
+    }
   }
 
   return (
@@ -35,14 +45,9 @@ const RegisterForm = () => {
         <DynamicInput name="email" label="Email" />
 
         <DynamicInput name="password" label="Password" type="password" />
-        
 
         <div className="space-y-4 pb-4">
-          <DynamicInput
-          name="confirmPassword"
-          label="Confirm Password"
-          type="password"
-        />
+          <DynamicInput name="confirmPassword" label="Confirm Password" type="password" />
           <RadioGroup defaultValue="option-one">
             <div className="flex items-center gap-3">
               <RadioGroupItem value="option-one" id="option-one" />
@@ -54,7 +59,7 @@ const RegisterForm = () => {
         <DynamicSubmit pending={form.formState.isSubmitting} text="Register" />
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm

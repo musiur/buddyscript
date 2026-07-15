@@ -89,7 +89,7 @@ export function DynamicCombobox({
             <ScrollArea className="h-65">
               <CommandEmpty>{emptyPlaceholder}</CommandEmpty>
               <CommandGroup>
-                {options.map(item => (
+                {options.map((item) => (
                   <CommandItem key={item.value} onSelect={() => handleSelect(item.value)}>
                     <Check
                       className={cn(
@@ -120,7 +120,7 @@ export function DynamicCombobox({
           "text-muted-foreground": isOptimistic || !value,
         })}
       >
-        {value ? options.find(item => item.value === value)?.label : placeholder}
+        {value ? options.find((item) => item.value === value)?.label : placeholder}
       </Button>
     )
   }

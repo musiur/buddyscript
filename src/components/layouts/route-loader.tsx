@@ -12,7 +12,7 @@ export function RouteLoader() {
     setProgress(20)
 
     const interval = setInterval(() => {
-      setProgress(prev => (prev < 90 ? prev + 10 : prev))
+      setProgress((prev) => (prev < 90 ? prev + 10 : prev))
     }, 200)
 
     const timeout = setTimeout(() => {
@@ -30,9 +30,9 @@ export function RouteLoader() {
   }, [pathname])
 
   return (
-    <div className="fixed top-0 left-0 w-full h-0.75 z-9999">
+    <div className="fixed top-0 left-0 z-9999 h-0.75 w-full">
       <div
-        className={`h-full bg-primary transition-all duration-300 ease-out ${
+        className={`bg-primary h-full transition-all duration-300 ease-out ${
           progress > 0 ? "opacity-100" : "opacity-0"
         }`}
         style={{ width: `${progress}%` }}

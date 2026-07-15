@@ -1,10 +1,10 @@
-import { Container } from "@/components/layouts/container";
-import { Feed } from "@/widgets/feed";
+import { Container } from "@/components/layouts/container"
+import { Feed } from "@/widgets/feed"
 
 const Home = async () => {
   return (
-    <Container className="flex items-start justify-between gap-6 py-6 relative">
-      <div className="min-w-[280px] xl:min-w-[300px] w-[300px] space-y-6 hidden lg:block">
+    <Container className="relative flex items-start justify-between gap-6 py-6">
+      <div className="hidden w-[300px] min-w-[280px] space-y-6 lg:block xl:min-w-[300px]">
         <Feed.Explore />
         <Feed.SuggestedPeople />
         <Feed.Events />
@@ -14,7 +14,7 @@ const Home = async () => {
         <Feed.PostForm />
         <Feed.PostList />
       </div>
-      <div className="min-w-[280px] xl:min-w-[300px] w-[300px] space-y-6 hidden xl:block">
+      <div className="hidden w-[300px] min-w-[280px] space-y-6 xl:block xl:min-w-[300px]">
         <Feed.YouMightLike />
         <Feed.YourFriends />
       </div>
@@ -22,5 +22,4 @@ const Home = async () => {
   )
 }
 
-export default Home;
-
+export default Home

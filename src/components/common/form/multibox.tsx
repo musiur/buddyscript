@@ -62,7 +62,7 @@ const Multibox = ({
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "justify-between h-auto px-2",
+                    "h-auto justify-between px-2",
                     !field.value && "text-muted-foreground"
                   )}
                 >
@@ -71,12 +71,12 @@ const Multibox = ({
                     {field?.value?.length > 0
                       ? field?.value
                           ?.map(
-                            (item: string) => options.find(option => option.value === item)?.label
+                            (item: string) => options.find((option) => option.value === item)?.label
                           )
                           ?.map((item: string) => {
                             return (
                               <div
-                                className="px-[8px] pt-[2px] bg-gray-200 dark:bg-gray-800 rounded"
+                                className="rounded bg-gray-200 px-[8px] pt-[2px] dark:bg-gray-800"
                                 key={item}
                               >
                                 {item}
@@ -89,21 +89,21 @@ const Multibox = ({
                 </Button>
               </FormControl>
             </PopoverTrigger>
-            <PopoverContent className="w-full border border-border p-0 rounded-xl overflow-hidden bg-background z-[2]">
+            <PopoverContent className="border-border bg-background z-[2] w-full overflow-hidden rounded-xl border p-0">
               <Command>
-                <Flex className="w-full p-2 flex gap-2">
+                <Flex className="flex w-full gap-2 p-2">
                   <Input
                     placeholder="Add option..."
-                    className="w-full h-9"
-                    onChange={e => setNewInput(e.target.value)}
+                    className="h-9 w-full"
+                    onChange={(e) => setNewInput(e.target.value)}
                     value={newInput}
                   />
                   <Flex
-                    className="w-auto h-9 bg-gray-100 dark:bg-gray-800 rounded-xl px-2 flex items-center justify-center"
+                    className="flex h-9 w-auto items-center justify-center rounded-xl bg-gray-100 px-2 dark:bg-gray-800"
                     role="button"
                     onClick={() => {
                       if (
-                        !options.find(option => option.value === newInput.trim()) &&
+                        !options.find((option) => option.value === newInput.trim()) &&
                         newInput.trim() !== ""
                       ) {
                         const value = newInput.trim()
@@ -116,12 +116,12 @@ const Multibox = ({
                     Add
                   </Flex>
                 </Flex>
-                <CommandInput placeholder="Search option..." className="w-full h-9" />
+                <CommandInput placeholder="Search option..." className="h-9 w-full" />
                 <CommandList>
                   <CommandEmpty>No option found.</CommandEmpty>
                   <CommandGroup>
                     <ScrollArea>
-                      {options.map(option => (
+                      {options.map((option) => (
                         <CommandItem
                           value={option.value}
                           key={option.value}
@@ -155,7 +155,7 @@ const Multibox = ({
           </Popover>
           {description ? (
             <FormDescription className="flex flex-wrap items-center gap-2">
-              <MessageCircleWarning className="w-4 h-4" />
+              <MessageCircleWarning className="h-4 w-4" />
               <span>{description}</span>
             </FormDescription>
           ) : null}

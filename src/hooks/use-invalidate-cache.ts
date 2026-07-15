@@ -6,7 +6,7 @@ export const useInvalidateCache = () => {
 
   const invalidateCache = async (keys: QueryKey[]) => {
     await Promise.all(
-      keys.map(key => {
+      keys.map((key) => {
         const queryKey = typeof key === "string" ? [key] : key
         return queryClient.invalidateQueries({ queryKey })
       })

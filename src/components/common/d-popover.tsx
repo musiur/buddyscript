@@ -24,13 +24,21 @@ type DynamicPopoverProps = {
 }
 
 const DynamicPopover: React.FC<DynamicPopoverProps> = (props): React.ReactNode => {
-  const { trigger, content, contentClassName, open, onOpenChange, align = "end", side = "bottom" } = props
+  const {
+    trigger,
+    content,
+    contentClassName,
+    open,
+    onOpenChange,
+    align = "end",
+    side = "bottom",
+  } = props
 
   return (
     <Popover open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger>{trigger}</PopoverTrigger>
       <PopoverContent
-        className={cn(contentClassName, "p-1! rounded-xl z-10!")}
+        className={cn(contentClassName, "z-10! rounded-xl p-1!")}
         align={align}
         side={side}
       >

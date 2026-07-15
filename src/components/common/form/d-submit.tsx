@@ -22,7 +22,7 @@ const DynamicSubmit = (props: DynamicButtonProps) => {
       disabled={props.pending || props.disabled}
     >
       {!props.pending && props.icon ? props.icon : null}
-      {props.pending ? <SunIcon className="w-4 h-4 animate-spin" /> : null}
+      {props.pending ? <SunIcon className="h-4 w-4 animate-spin" /> : null}
       {props.pending ? props.text || "Submitting..." : props.text || "Submit"}
     </Button>
   )

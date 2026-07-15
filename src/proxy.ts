@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server"
 
 export function proxy(request: NextRequest) {
   // Example: clone the URL if you need to modify it
@@ -21,7 +21,7 @@ export function proxy(request: NextRequest) {
   //   return NextResponse.redirect(new URL("/login", request.url));
   // }
 
-  return NextResponse.next();
+  return NextResponse.next()
 }
 
 export const config = {
@@ -37,4 +37,4 @@ export const config = {
      */
     "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
   ],
-};
+}

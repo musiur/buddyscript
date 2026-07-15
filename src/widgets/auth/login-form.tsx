@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Form } from "@/components/ui/form";
-import Link from "next/link";
-import DynamicInput from "@/components/common/form/d-input";
-import DynamicSubmit from "@/components/common/form/d-submit";
-import Flex from "@/components/layouts/flex-layout";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { LoginFormSchema, TLoginFormSchema } from "@/features/auth/schemas/login.schema";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { Form } from "@/components/ui/form"
+import Link from "next/link"
+import DynamicInput from "@/components/common/form/d-input"
+import DynamicSubmit from "@/components/common/form/d-submit"
+import Flex from "@/components/layouts/flex-layout"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { LoginFormSchema, TLoginFormSchema } from "@/features/auth/schemas/login.schema"
 
 const LoginForm = () => {
   const form = useForm<TLoginFormSchema>({
@@ -19,10 +19,10 @@ const LoginForm = () => {
       email: "",
       password: "",
     },
-  });
+  })
 
   async function onSubmit(data: TLoginFormSchema) {
-    console.log(data);
+    console.log(data)
   }
 
   return (
@@ -39,10 +39,7 @@ const LoginForm = () => {
                 <Label htmlFor="option-one">Remember me</Label>
               </div>
             </RadioGroup>
-            <Link
-              href="#"
-              className="inline-block w-full text-right text-primary hover:underline"
-            >
+            <Link href="#" className="text-primary inline-block w-full text-right hover:underline">
               Forget Password?
             </Link>
           </Flex>
@@ -50,7 +47,7 @@ const LoginForm = () => {
         <DynamicSubmit pending={form.formState.isSubmitting} text="Login" />
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

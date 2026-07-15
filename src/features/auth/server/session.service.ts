@@ -1,89 +1,72 @@
-import { SessionRepository } from "@/infra/db/repositories/session.repository";
-import { generateSessionToken, hashSessionToken } from "@/lib/crypto";
-import { cookieService } from "./cookie.service";
-import { AuthSession } from "@/entities/session/model";
+import { SessionRepository } from "@/infra/db/repositories/session.repository"
+import { generateSessionToken, hashSessionToken } from "@/lib/crypto"
+import { cookieService } from "./cookie.service"
+import { AuthSession } from "@/entities/session/model"
 
-const SESSION_TTL = process.env.SESSION_TTL!;
+const SESSION_TTL = process.env.SESSION_TTL!
 
 const createSessionService = async (userId: string): Promise<void> => {
+  const token = generateSessionToken()
 
-    const token = generateSessionToken();
+  const tokenHash = hashSessionToken(token)
 
-    const tokenHash = hashSessionToken(token);
+  const expiresAt = new Date(Date.now() + SESSION_TTL)
 
-    const expiresAt =
-        new Date(Date.now() + SESSION_TTL);
+  await SessionRepository.create({
+    tokenHash,
 
-    await SessionRepository.create({
+    userId,
 
-        tokenHash,
+    expiresAt,
+  })
 
-        userId,
-
-        expiresAt,
-    });
-
-    await cookieService.setSession(token, expiresAt);
+  await cookieService.setSession(token, expiresAt)
 }
 
 const validate = async (): Promise<AuthSession | null> => {
+  const token = await cookieService.getSession()
 
-    const token = await cookieService.getSession();
+  if (!token) {
+    return null
+  }
 
-    if (!token) {
-        return null;
-    }
+  const tokenHash = hashSessionToken(token)
 
-    const tokenHash =
-        hashSessionToken(token);
+  const authSession = await SessionRepository.findAuthSessionByTokenHash(tokenHash)
 
-    const authSession =
-        await SessionRepository.findAuthSessionByTokenHash(
-            tokenHash
-        );
+  if (!authSession) {
+    await cookieService.deleteSession()
 
-    if (!authSession) {
+    return null
+  }
 
-        await cookieService.deleteSession();
+  if (authSession.session.expiresAt < new Date()) {
+    await SessionRepository.deleteByTokenHash(tokenHash)
 
-        return null;
-    }
+    await cookieService.deleteSession()
 
-    if (authSession.session.expiresAt < new Date()) {
+    return null
+  }
 
-        await SessionRepository.deleteByTokenHash(
-            tokenHash
-        );
-
-        await cookieService.deleteSession();
-
-        return null;
-    }
-
-    return authSession;
+  return authSession
 }
 
 const destroy = async (): Promise<void> => {
+  const token = await cookieService.getSession()
 
-    const token = await cookieService.getSession();
+  if (!token) {
+    return
+  }
 
-    if (!token) {
+  const tokenHash = hashSessionToken(token)
 
-        return;
-    }
+  await SessionRepository.deleteByTokenHash(tokenHash)
 
-    const tokenHash =
-        hashSessionToken(token);
-
-    await SessionRepository.deleteByTokenHash(
-        tokenHash
-    );
-
-    await cookieService.deleteSession();
+  await cookieService.deleteSession()
 }
 
 export const SessionService = {
-    createSessionService,
-    validate,
-    destroy
+  createSessionService,
+  validate,
+  destroy,
 }

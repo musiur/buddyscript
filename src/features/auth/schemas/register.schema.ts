@@ -1,4 +1,4 @@
-import z from "zod";
+import z from "zod"
 
 export const RegisterFormSchema = z.object({
   firstName: z.string().min(2, {
@@ -16,6 +16,6 @@ export const RegisterFormSchema = z.object({
   confirmPassword: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-});
+})
 
-export type TRegisterFormSchema = z.infer<typeof RegisterFormSchema>;
+export type TRegisterFormSchema = z.infer<typeof RegisterFormSchema>

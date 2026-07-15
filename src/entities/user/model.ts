@@ -1,18 +1,17 @@
 export interface User {
-  id: string;
+  id: string
 
-  firstName: string;
-  lastName: string;
+  firstName: string
+  lastName: string
 
-  email: string;
+  email: string
 
-  passwordHash: string;
+  passwordHash: string
 
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date
+  updatedAt: Date
 }
 
-
 export interface UserWithPassword extends User {
-  passwordHash: string;
+  passwordHash: string
 }

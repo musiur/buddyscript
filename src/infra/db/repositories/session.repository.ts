@@ -1,7 +1,7 @@
-import { db } from "..";
-import { AuthSession, Session } from "@/entities/session/model";
-import { CreateSessionInput } from "@/entities/session/dto";
-import { v4 as uuid } from "uuid";
+import { db } from ".."
+import { AuthSession, Session } from "@/entities/session/model"
+import { CreateSessionInput } from "@/entities/session/dto"
+import { v4 as uuid } from "uuid"
 
 const findById = async (id: string): Promise<Session | null> => {
   const rows = await db<Session[]>`
@@ -9,13 +9,13 @@ const findById = async (id: string): Promise<Session | null> => {
     FROM sessions
     WHERE id = ${id}
     LIMIT 1
-  `;
+  `
 
   if (!rows.length) {
-    return null;
+    return null
   }
 
-  return rows[0];
+  return rows[0]
 }
 
 const findByTokenHash = async (tokenHash: string): Promise<Session | null> => {
@@ -24,13 +24,13 @@ const findByTokenHash = async (tokenHash: string): Promise<Session | null> => {
     FROM sessions
     WHERE tokenHash = ${tokenHash}
     LIMIT 1
-  `;
+  `
 
   if (!rows.length) {
-    return null;
+    return null
   }
 
-  return rows[0];
+  return rows[0]
 }
 
 const create = async (input: CreateSessionInput): Promise<Session> => {
@@ -52,9 +52,9 @@ const create = async (input: CreateSessionInput): Promise<Session> => {
       ${input.userAgent ?? null}
     )
     RETURNING *
-  `;
+  `
 
-  return rows[0];
+  return rows[0]
 }
 
 const updateLastSeen = async (id: string): Promise<void> => {
@@ -63,7 +63,7 @@ const updateLastSeen = async (id: string): Promise<void> => {
     SET
       lastSeenAt = NOW()
     WHERE id = ${id}
-  `;
+  `
 }
 
 const deleteByTokenHash = async (tokenHash: string): Promise<void> => {
@@ -71,7 +71,7 @@ const deleteByTokenHash = async (tokenHash: string): Promise<void> => {
     DELETE
     FROM sessions
     WHERE tokenHash = ${tokenHash}
-  `;
+  `
 }
 
 const deleteByUserId = async (userId: string): Promise<void> => {
@@ -79,7 +79,7 @@ const deleteByUserId = async (userId: string): Promise<void> => {
     DELETE
     FROM sessions
     WHERE userId = ${userId}
-  `;
+  `
 }
 
 const deleteExpired = async (): Promise<number> => {
@@ -88,14 +88,12 @@ const deleteExpired = async (): Promise<number> => {
     FROM sessions
     WHERE expiresAt <= NOW()
     RETURNING 1
-  `;
+  `
 
-  return rows.length;
+  return rows.length
 }
 
-const findAuthSessionByTokenHash = async (
-  tokenHash: string
-): Promise<AuthSession | null> => {
+const findAuthSessionByTokenHash = async (tokenHash: string): Promise<AuthSession | null> => {
   const rows = await db<AuthSession[]>`
       SELECT
         s.id             AS session_id,
@@ -121,15 +119,15 @@ const findAuthSessionByTokenHash = async (
 
       WHERE s.tokenHash = ${tokenHash}
       LIMIT 1
-    `;
+    `
 
   if (!rows.length) {
-    return null;
+    return null
   }
 
-  const row = rows[0];
+  const row = rows[0]
 
-  return row;
+  return row
 }
 
 export const SessionRepository = {
@@ -140,5 +138,5 @@ export const SessionRepository = {
   deleteByTokenHash,
   deleteByUserId,
   deleteExpired,
-  findAuthSessionByTokenHash
+  findAuthSessionByTokenHash,
 }

@@ -48,12 +48,12 @@ export function DynamicMultiCombobox({
   const [open, setOpen] = React.useState(false)
 
   const handleSelect = (selectedValue: string) => {
-    const isSelected = value.some(item => item.value === selectedValue)
+    const isSelected = value.some((item) => item.value === selectedValue)
 
     if (isSelected) {
-      onSelect(value.filter(item => item.value !== selectedValue))
+      onSelect(value.filter((item) => item.value !== selectedValue))
     } else {
-      const selectedOption = options.find(item => item.value === selectedValue)
+      const selectedOption = options.find((item) => item.value === selectedValue)
       if (selectedOption) {
         onSelect([...value, selectedOption])
       }
@@ -62,7 +62,7 @@ export function DynamicMultiCombobox({
 
   const handleRemove = (valueToRemove: string, e: React.MouseEvent) => {
     e.stopPropagation()
-    onSelect(value.filter(item => item.value !== valueToRemove))
+    onSelect(value.filter((item) => item.value !== valueToRemove))
   }
 
   return (
@@ -73,34 +73,34 @@ export function DynamicMultiCombobox({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-start min-h-10 h-auto"
+            className="h-auto min-h-10 w-full justify-start"
           >
-            <div className="flex flex-wrap gap-1 w-full">
+            <div className="flex w-full flex-wrap gap-1">
               {value?.length > 0 ? (
-                value.map(item => (
+                value.map((item) => (
                   <Badge
                     key={item.value}
                     variant="secondary"
-                    className="mr-1 mb-1 pl-1 pr-2 py-1 flex items-center gap-1.5"
+                    className="mr-1 mb-1 flex items-center gap-1.5 py-1 pr-2 pl-1"
                   >
                     {showAvatar && (
                       <DynamicAvatar name={item.label} src={item.avatar || ""} className="size-6" />
                     )}
                     <span>{item.label}</span>
                     <button
-                      className="ml-0.5 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                      onKeyDown={e => {
+                      className="ring-offset-background focus:ring-ring ml-0.5 rounded-full outline-none focus:ring-2 focus:ring-offset-2"
+                      onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handleRemove(item.value, e as any)
                         }
                       }}
-                      onMouseDown={e => {
+                      onMouseDown={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
                       }}
-                      onClick={e => handleRemove(item.value, e)}
+                      onClick={(e) => handleRemove(item.value, e)}
                     >
-                      <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                      <X className="text-muted-foreground hover:text-foreground h-3 w-3" />
                     </button>
                   </Badge>
                 ))
@@ -117,13 +117,13 @@ export function DynamicMultiCombobox({
           <CommandList>
             <CommandEmpty>{emptyPlaceholder}</CommandEmpty>
             <CommandGroup>
-              {options.map(item => {
-                const isSelected = value.some(v => v.value === item.value)
+              {options.map((item) => {
+                const isSelected = value.some((v) => v.value === item.value)
                 return (
                   <CommandItem
                     key={item.value}
                     onSelect={() => handleSelect(item.value)}
-                    className="cursor-pointer flex items-center justify-between"
+                    className="flex cursor-pointer items-center justify-between"
                   >
                     {renderOption ? (
                       renderOption(item)
