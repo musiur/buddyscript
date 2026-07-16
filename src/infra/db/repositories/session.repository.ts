@@ -22,7 +22,7 @@ const findByTokenHash = async (tokenHash: string): Promise<Session | null> => {
   const rows = await db<Session[]>`
     SELECT *
     FROM sessions
-    WHERE tokenHash = ${tokenHash}
+    WHERE token_hash = ${tokenHash}
     LIMIT 1
   `
 
@@ -37,11 +37,11 @@ const create = async (input: CreateSessionInput): Promise<Session> => {
   const rows = await db<Session[]>`
     INSERT INTO sessions (
       id,
-      tokenHash,
-      userId,
-      expiresAt,
-      ipAddress,
-      userAgent
+      token_hash,
+      user_id,
+      expires_at,
+      ip_address,
+      user_agent
     )
     VALUES (
       ${uuid()},
@@ -61,7 +61,7 @@ const updateLastSeen = async (id: string): Promise<void> => {
   await db`
     UPDATE sessions
     SET
-      lastSeenAt = NOW()
+      last_seen_at = NOW()
     WHERE id = ${id}
   `
 }
@@ -70,7 +70,7 @@ const deleteByTokenHash = async (tokenHash: string): Promise<void> => {
   await db`
     DELETE
     FROM sessions
-    WHERE tokenHash = ${tokenHash}
+    WHERE token_hash = ${tokenHash}
   `
 }
 
@@ -78,7 +78,7 @@ const deleteByUserId = async (userId: string): Promise<void> => {
   await db`
     DELETE
     FROM sessions
-    WHERE userId = ${userId}
+    WHERE user_id = ${userId}
   `
 }
 
@@ -86,7 +86,7 @@ const deleteExpired = async (): Promise<number> => {
   const rows = await db<{ count: number }[]>`
     DELETE
     FROM sessions
-    WHERE expiresAt <= NOW()
+    WHERE expires_at <= NOW()
     RETURNING 1
   `
 
@@ -97,27 +97,27 @@ const findAuthSessionByTokenHash = async (tokenHash: string): Promise<AuthSessio
   const rows = await db<AuthSession[]>`
       SELECT
         s.id             AS session_id,
-        s.tokenHash,
-        s.userId,
-        s.expiresAt,
-        s.createdAt,
-        s.lastSeenAt,
-        s.ipAddress,
-        s.userAgent,
+        s.token_hash,
+        s.user_id,
+        s.expires_at,
+        s.created_at,
+        s.last_seen_at,
+        s.ip_address,
+        s.user_agent,
 
         u.id             AS id,
-        u.firstName,
-        u.lastName,
+        u.first_name,
+        u.last_name,
         u.email,
-        u.passwordHash,
-        u.createdAt,
-        u.updatedAt
+        u.password_hash,
+        u.created_at,
+        u.updated_at
 
       FROM sessions s
       INNER JOIN users u
-        ON u.id = s.userId
+        ON u.id = s.user_id
 
-      WHERE s.tokenHash = ${tokenHash}
+      WHERE s.token_hash = ${tokenHash}
       LIMIT 1
     `
 

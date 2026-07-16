@@ -3,7 +3,7 @@ import { generateSessionToken, hashSessionToken } from "@/lib/crypto"
 import { cookieService } from "./cookie.service"
 import { AuthSession } from "@/entities/session/model"
 
-const SESSION_TTL = process.env.SESSION_TTL!
+const SESSION_TTL = Number(process.env.SESSION_TTL! || "3600")
 
 const createSessionService = async (userId: string): Promise<void> => {
   const token = generateSessionToken()

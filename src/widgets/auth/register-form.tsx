@@ -25,7 +25,7 @@ const RegisterForm = () => {
 
   async function onSubmit(data: TRegisterFormSchema) {
     const result = await registerAction(data)
-    console.log(result)
+
     if (result?.success) {
       toast.success("Account registration", {
         description: result?.message || "User registered and logged in succesfully",

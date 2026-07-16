@@ -37,10 +37,10 @@ const create = async (input: CreateUserInput) => {
   const rows = await db<User[]>`
     INSERT INTO users (
       id,
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
-      passwordHash
+      password_hash
     )
     VALUES (
       ${uuid()},
@@ -52,8 +52,6 @@ const create = async (input: CreateUserInput) => {
     RETURNING *
   `
 
-  console.log(rows[0])
-
   return rows[0]
 }
 
@@ -61,9 +59,9 @@ const update = async (user: User) => {
   const rows = await db<User[]>`
     UPDATE users
     SET
-      firstName = ${user.firstName},
-      lastName = ${user.lastName},
-      updateAt = NOW()
+      first_name = ${user.firstName},
+      last_name = ${user.lastName},
+      update_at = NOW()
     WHERE id = ${user.id}
     RETURNING *
   `

@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { Form } from "@/components/ui/form"
 import Link from "next/link"
 import DynamicInput from "@/components/common/form/d-input"
@@ -11,6 +10,8 @@ import Flex from "@/components/layouts/flex-layout"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { LoginFormSchema, TLoginFormSchema } from "@/features/auth/schemas/login.schema"
+import { loginAction } from "@/features/auth/actions/login"
+import { toast } from "sonner"
 
 const LoginForm = () => {
   const form = useForm<TLoginFormSchema>({
@@ -22,7 +23,17 @@ const LoginForm = () => {
   })
 
   async function onSubmit(data: TLoginFormSchema) {
-    console.log(data)
+    const result = await loginAction(data)
+    console.log(result)
+    if (result?.success) {
+      toast.success("User login", {
+        description: result?.message || "login succesful. Redirecting...",
+      })
+    } else {
+      toast.error("User login", {
+        description: result?.message || "Login failed!",
+      })
+    }
   }
 
   return (
