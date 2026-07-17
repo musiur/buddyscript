@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 export function proxy(request: NextRequest) {
   // Example: clone the URL if you need to modify it
-  // const url = request.nextUrl.clone();
+  const url = request.nextUrl.clone()
 
   // Example: redirect
   // if (url.pathname === "/old") {
@@ -16,10 +16,14 @@ export function proxy(request: NextRequest) {
   // }
 
   // Example: authentication
-  // const token = request.cookies.get("token");
-  // if (!token && url.pathname.startsWith("/dashboard")) {
-  //   return NextResponse.redirect(new URL("/login", request.url));
-  // }
+  const token = request.cookies.get(process.env.AUTH_COOKIE_NAME!)
+  if (!token && (url.pathname.startsWith("/dashboard") || url.pathname === "/")) {
+    return NextResponse.redirect(new URL("/login", request.url))
+  }
+
+  if (token && ["/login", "/register"].includes(url.pathname)) {
+    return NextResponse.redirect(new URL("/", request.url))
+  }
 
   return NextResponse.next()
 }

@@ -12,8 +12,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { LoginFormSchema, TLoginFormSchema } from "@/features/auth/schemas/login.schema"
 import { loginAction } from "@/features/auth/actions/login"
 import { toast } from "sonner"
+import { useInvalidateCache } from "@/hooks/use-invalidate-cache"
+import { useRouter } from "next/navigation"
 
 const LoginForm = () => {
+  const router = useRouter()
+  const { invalidateCache } = useInvalidateCache()
   const form = useForm<TLoginFormSchema>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
@@ -24,11 +28,13 @@ const LoginForm = () => {
 
   async function onSubmit(data: TLoginFormSchema) {
     const result = await loginAction(data)
-    console.log(result)
+
     if (result?.success) {
+      invalidateCache(["me"])
       toast.success("User login", {
         description: result?.message || "login succesful. Redirecting...",
       })
+      router.push("/")
     } else {
       toast.error("User login", {
         description: result?.message || "Login failed!",

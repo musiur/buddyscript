@@ -1,16 +1,17 @@
 import { SessionRepository } from "@/infra/db/repositories/session.repository"
 import { generateSessionToken, hashSessionToken } from "@/lib/crypto"
 import { cookieService } from "./cookie.service"
-import { AuthSession } from "@/entities/session/model"
+import { AuthSession, AuthSessionWithoutPasswordHash, Session } from "@/entities/session/model"
+import { User, UserWithPasswordHash } from "@/entities/user/model"
 
-const SESSION_TTL = Number(process.env.SESSION_TTL! || "3600")
+const SESSION_TTL_SECONDS = Number(process.env.SESSION_TTL_SECONDS! || "3600")
 
 const createSessionService = async (userId: string): Promise<void> => {
   const token = generateSessionToken()
 
   const tokenHash = hashSessionToken(token)
 
-  const expiresAt = new Date(Date.now() + SESSION_TTL)
+  const expiresAt = new Date(Date.now() + SESSION_TTL_SECONDS * 1000)
 
   await SessionRepository.create({
     tokenHash,
@@ -23,7 +24,7 @@ const createSessionService = async (userId: string): Promise<void> => {
   await cookieService.setSession(token, expiresAt)
 }
 
-const validate = async (): Promise<AuthSession | null> => {
+const validate = async (): Promise<AuthSessionWithoutPasswordHash | null> => {
   const token = await cookieService.getSession()
 
   if (!token) {
@@ -40,7 +41,7 @@ const validate = async (): Promise<AuthSession | null> => {
     return null
   }
 
-  if (authSession.session.expiresAt < new Date()) {
+  if (authSession.expiresAt < new Date()) {
     await SessionRepository.deleteByTokenHash(tokenHash)
 
     await cookieService.deleteSession()
@@ -48,7 +49,29 @@ const validate = async (): Promise<AuthSession | null> => {
     return null
   }
 
-  return authSession
+  const formatedAuthSession: AuthSessionWithoutPasswordHash = {
+    user: {
+      id: authSession.userId,
+      firstName: authSession.firstName,
+      lastName: authSession.lastName,
+      email: authSession.email,
+      avatar: authSession.avatar,
+      createdAt: authSession.createdAt,
+      updatedAt: authSession.updatedAt,
+    },
+    session: {
+      id: authSession.sessionId as string,
+      tokenHash: authSession.tokenHash,
+      userId: authSession.userId,
+      expiresAt: authSession.expiresAt,
+      createdAt: authSession.createdAt,
+      lastSeenAt: authSession.lastSeenAt,
+      ipAddress: authSession.ipAddress,
+      userAgent: authSession.userAgent,
+    },
+  }
+
+  return formatedAuthSession
 }
 
 const destroy = async (): Promise<void> => {

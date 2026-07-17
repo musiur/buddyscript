@@ -1,17 +1,13 @@
 export interface User {
   id: string
-
   firstName: string
   lastName: string
-
   email: string
-
-  passwordHash: string
-
+  avatar: string
   createdAt: Date
   updatedAt: Date
 }
 
-export interface UserWithPassword extends User {
+export interface UserWithPasswordHash extends User {
   passwordHash: string
 }

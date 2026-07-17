@@ -1,10 +1,11 @@
 import { db } from ".."
-import { AuthSession, Session } from "@/entities/session/model"
+import { AuthSession, AuthSessionJoin, Session } from "@/entities/session/model"
 import { CreateSessionInput } from "@/entities/session/dto"
 import { v4 as uuid } from "uuid"
+import { convertObjectKeysCase } from "@/lib/convert-case"
 
 const findById = async (id: string): Promise<Session | null> => {
-  const rows = await db<Session[]>`
+  const rows = await db<Array<Session>>`
     SELECT *
     FROM sessions
     WHERE id = ${id}
@@ -15,11 +16,11 @@ const findById = async (id: string): Promise<Session | null> => {
     return null
   }
 
-  return rows[0]
+  return convertObjectKeysCase<Session>(rows[0])
 }
 
 const findByTokenHash = async (tokenHash: string): Promise<Session | null> => {
-  const rows = await db<Session[]>`
+  const rows = await db<Array<Session>>`
     SELECT *
     FROM sessions
     WHERE token_hash = ${tokenHash}
@@ -30,11 +31,11 @@ const findByTokenHash = async (tokenHash: string): Promise<Session | null> => {
     return null
   }
 
-  return rows[0]
+  return convertObjectKeysCase<Session>(rows[0])
 }
 
 const create = async (input: CreateSessionInput): Promise<Session> => {
-  const rows = await db<Session[]>`
+  const rows = await db<Array<Session>>`
     INSERT INTO sessions (
       id,
       token_hash,
@@ -54,7 +55,7 @@ const create = async (input: CreateSessionInput): Promise<Session> => {
     RETURNING *
   `
 
-  return rows[0]
+  return convertObjectKeysCase<Session>(rows[0])
 }
 
 const updateLastSeen = async (id: string): Promise<void> => {
@@ -93,8 +94,8 @@ const deleteExpired = async (): Promise<number> => {
   return rows.length
 }
 
-const findAuthSessionByTokenHash = async (tokenHash: string): Promise<AuthSession | null> => {
-  const rows = await db<AuthSession[]>`
+const findAuthSessionByTokenHash = async (tokenHash: string): Promise<AuthSessionJoin | null> => {
+  const rows = await db<Array<AuthSessionJoin>>`
       SELECT
         s.id             AS session_id,
         s.token_hash,
@@ -109,6 +110,7 @@ const findAuthSessionByTokenHash = async (tokenHash: string): Promise<AuthSessio
         u.first_name,
         u.last_name,
         u.email,
+        u.avatar,
         u.password_hash,
         u.created_at,
         u.updated_at
@@ -127,7 +129,7 @@ const findAuthSessionByTokenHash = async (tokenHash: string): Promise<AuthSessio
 
   const row = rows[0]
 
-  return row
+  return convertObjectKeysCase<AuthSessionJoin>(row)
 }
 
 export const SessionRepository = {

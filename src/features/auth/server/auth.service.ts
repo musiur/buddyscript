@@ -3,7 +3,6 @@ import { User } from "@/entities/user/model"
 import { UserRepository } from "@/infra/db/repositories/user.repository"
 import { PasswordService } from "./password.service"
 import { SessionService } from "./session.service"
-import { tryCatch } from "@/lib/error-handlers/tryCatch"
 
 export const authService = {
   register: async (input: RegisterInput): Promise<User> => {
@@ -28,13 +27,11 @@ export const authService = {
   },
 
   login: async (input: LoginInput): Promise<User | null> => {
-    const user = await UserRepository.findByEmail(input.email)
+    const user = await UserRepository.findByEmailWithPasswordHash(input.email)
 
     if (!user) {
       throw new Error("Invalid email or password.")
     }
-
-    console.log(input.password, user)
 
     const validPassword = await PasswordService.verify(input.password, user.passwordHash)
 
@@ -42,11 +39,9 @@ export const authService = {
       throw new Error("Invalid email or password.")
     }
 
-    console.log(user)
-
     await SessionService.createSessionService(user.id)
 
-    return user[0]
+    return user
   },
 
   logout: async (): Promise<void> => {

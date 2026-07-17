@@ -1,8 +1,10 @@
 import { create } from "zustand"
 import { User } from "@/entities/user/model"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { meAction } from "../actions/me"
 import { persist } from "zustand/middleware"
+import { logoutAction } from "../actions/logout"
+import { useInvalidateCache } from "@/hooks/use-invalidate-cache"
 
 interface IAuthStore {
   user: User | null
@@ -26,8 +28,10 @@ export const useAuthStore = create<IAuthStore>()(
 )
 
 export function useAuth() {
+  const { invalidateCache } = useInvalidateCache()
   const setUser = useAuthStore((s) => s.setUser)
   const persistedUser = useAuthStore((s) => s.user)
+  const clearUser = useAuthStore((s) => s.clearUser)
 
   const query = useQuery({
     queryKey: ["me"],
@@ -47,5 +51,14 @@ export function useAuth() {
     staleTime: 3600,
   })
 
-  return query
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: async () => {
+      const response = await logoutAction()
+
+      return response
+    },
+  })
+
+  return { ...query, logout: mutate, isLogoutPending: isPending }
 }

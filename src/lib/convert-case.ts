@@ -33,3 +33,13 @@ export const convertCase = (input: string, target: LetterCase): string => {
       return input
   }
 }
+
+export const convertObjectKeysCase = <T extends object>(input: T, target?: LetterCase): T => {
+  const result: Record<string, unknown> = {}
+
+  Object.entries(input).forEach(([key, value]) => {
+    result[convertCase(key, target || "camel")] = value
+  })
+
+  return result as T
+}
